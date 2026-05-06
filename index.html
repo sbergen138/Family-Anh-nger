@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Family Anhänger</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #222;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 18px 24px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    h2 { margin-bottom: 16px; font-size: 1.1rem; color: #444; }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    label { font-size: 0.82rem; color: #666; font-weight: 600; }
+
+    select, input[type="date"] {
+      padding: 9px 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #fafafa;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input[type="date"]:focus {
+      outline: none;
+      border-color: #4a90e2;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button:hover { opacity: 0.85; }
+
+    .btn-add {
+      background: #1a1a2e;
+      color: white;
+      font-weight: bold;
+      min-width: 120px;
+    }
+
+    .btn-edit {
+      background: #f0a500;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-delete {
+      background: #e84040;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-save {
+      background: #28a745;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-cancel {
+      background: #aaa;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    /* Kalender */
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .calendar-nav button {
+      background: #1a1a2e;
+      color: white;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    .month-label {
+      font-size: 1.1rem;
+      font-weight: bold;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .day-header {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #888;
+      padding: 6px 0;
+    }
+
+    .day-cell {
+      background: #f8f8f8;
+      border-radius: 8px;
+      min-height: 72px;
+      padding: 4px;
+      position: relative;
+    }
+
+    .day-cell.today { border: 2px solid #4a90e2; }
+
+    .day-number {
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-bottom: 2px;
+    }
+
+    .day-cell.in-month .day-number { color: #333; font-weight: 600; }
+
+    .booking-chip {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: white;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    /* Buchungsliste */
+    .booking-list { list-style: none; }
+
+    .booking-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      flex-wrap: wrap;
+    }
+
+    .booking-item:last-child { border-bottom: none; }
+
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .booking-info { flex: 1; font-size: 0.9rem; }
+    .booking-name { font-weight: 700; }
+    .booking-dates { color: #666; font-size: 0.82rem; }
+
+    .booking-actions { display: flex; gap: 6px; }
+
+    .edit-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      margin-top: 8px;
+      padding: 10px;
+      background: #f7f9ff;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .edit-form .form-group { min-width: 120px; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .empty-note {
+      color: #aaa;
+      font-style: italic;
+      font-size: 0.9rem;
+      padding: 8px 0;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { flex-direction: column; }
+      .day-cell { min-height: 54px; }
+      .booking-chip { font-size: 0.62rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>🚛 Family Anhänger</header>
+
+<div class="container">
+
+  <!-- Neuen Eintrag erstellen -->
+  <div class="card">
+    <h2>➕ Neue Buchung</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sel-person">Person</label>
+        <select id="sel-person">
+          <option value="">– Person wählen –</option>
+          <option value="Andreas">Andreas</option>
+          <option value="Waldemar">Waldemar</option>
+          <option value="Viktor">Viktor</option>
+          <option value="Matthias">Matthias</option>
+          <option value="Johann">Johann</option>
+          <option value="Stefan">Stefan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel-from">Von</label>
+        <input type="date" id="sel-from" />
+      </div>
+      <div class="form-group">
+        <label for="sel-to">Bis</label>
+        <input type="date" id="sel-to" />
+      </div>
+      <button class="btn-add" onclick="addBooking()">Eintragen</button>
+    </div>
+    <p id="form-error" style="color:#e84040;font-size:0.85rem;margin-top:8px;"></p>
+  </div>
+
+  <!-- Kalender -->
+  <div class="card">
+    <div class="legend" id="legend"></div>
+    <div class="calendar-nav">
+      <button onclick="prevMonth()">‹</button>
+      <span class="month-label" id="month-label"></span>
+      <button onclick="nextMonth()">›</button>
+    </div>
+    <div class="calendar-grid" id="calendar"></div>
+  </div>
+
+  <!-- Buchungsliste -->
+  <div class="card">
+    <h2>📋 Alle Buchungen</h2>
+    <ul class="booking-list" id="booking-list"></ul>
+  </div>
+
+</div>
+
+<script>
+  const COLORS = {
+    Andreas:  '#e74c3c',
+    Waldemar: '#e67e22',
+    Viktor:   '#2ecc71',
+    Matthias: '#3498db',
+    Johann:   '#9b59b6',
+    Stefan:   '#1abc9c'
+  };
+
+  const MONTHS = ['Januar','Februar','März','April','Mai','Juni',
+                  'Juli','August','September','Oktober','November','Dezember'];
+  const DAYS   = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+  let bookings = JSON.parse(localStorage.getItem('anhaenger_bookings') || '[]');
+  let currentYear  = new Date().getFullYear();
+  let currentMonth = new Date().getMonth();
+
+  function save() {
+    localStorage.setItem('anhaenger_bookings', JSON.stringify(bookings));
+  }
+
+  function formatDate(d) {
+    // d = "YYYY-MM-DD"
+    const [y, m, day] = d.split('-');
+    return `${day}.${m}.${y}`;
+  }
+
+  function addBooking() {
+    const person = document.getElementById('sel-person').value;
+    const from   = document.getElementById('sel-from').value;
+    const to     = document.getElementById('sel-to').value;
+    const err    = document.getElementById('form-error');
+
+    if (!person || !from || !to) {
+      err.textContent = 'Bitte alle Felder ausfüllen.'; return;
+    }
+    if (from > to) {
+      err.textContent = '"Von" darf nicht nach "Bis" liegen.'; return;
+    }
+    err.textContent = '';
+
+    bookings.push({ id: Date.now(), person, from, to });
+    save();
+    render();
+
+    document.getElementById('sel-person').value = '';
+    document.getElementById('sel-from').value   = '';
+    document.getElementById('sel-to').value     = '';
+  }
+
+  function deleteBooking(id) {
+    if (!confirm('Eintrag wirklich löschen?')) return;
+    bookings = bookings.filter(b => b.id !== id);
+    save(); render();
+  }
+
+  function startEdit(id) {
+    render(id); // re-render with edit form open
+  }
+
+  function saveEdit(id) {
+    const person = document.getElementById(`ep-${id}`).value;
+    const from   = document.getElementById(`ef-${id}`).value;
+    const to     = document.getElementById(`et-${id}`).value;
+    if (!person || !from || !to) { alert('Bitte alle Felder ausfüllen.'); return; }
+    if (from > to) { alert('"Von" darf nicht nach "Bis" liegen.'); return; }
+
+    const b = bookings.find(b => b.id === id);
+    b.person = person; b.from = from; b.to = to;
+    save(); render();
+  }
+
+  function prevMonth() { currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; } renderCalendar(); }
+  function nextMonth() { currentMonth++; if (currentMonth > 11) { currentMonth = 0;  currentYear++; } renderCalendar(); }
+
+  function render(editId = null) {
+    renderLegend();
+    renderCalendar();
+    renderList(editId);
+  }
+
+  function renderLegend() {
+    const el = document.getElementById('legend');
+    el.innerHTML = Object.entries(COLORS).map(([name, color]) =>
+      `<span class="legend-item">
+         <span class="color-dot" style="background:${color}"></span>${name}
+       </span>`
+    ).join('');
+  }
+
+  function renderCalendar() {
+    document.getElementById('month-label').textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+
+    const grid = document.getElementById('calendar');
+    grid.innerHTML = DAYS.map(d => `<div class="day-header">${d}</div>`).join('');
+
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    // Monday-based: 0=Mo … 6=So
+    let startOffset = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date().toISOString().slice(0, 10);
+
+    // fill leading empty cells
+    for (let i = 0; i < startOffset; i++) {
+      grid.innerHTML += `<div class="day-cell"></div>`;
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isToday = dateStr === today;
+
+      const chips = bookings
+        .filter(b => b.from <= dateStr && dateStr <= b.to)
+        .map(b => `<div class="booking-chip" style="background:${COLORS[b.person]}">${b.person}</div>`)
+        .join('');
+
+      grid.innerHTML +=
+        `<div class="day-cell in-month${isToday ? ' today' : ''}">
+           <div class="day-number">${d}</div>
+           ${chips}
+         </div>`;
+    }
+  }
+
+  function renderList(editId = null) {
+    const ul = document.getElementById('booking-list');
+    if (bookings.length === 0) {
+      ul.innerHTML = '<p class="empty-note">Noch keine Buchungen vorhanden.</p>';
+      return;
+    }
+
+    const sorted = [...bookings].sort((a, b) => a.from.localeCompare(b.from));
+
+    ul.innerHTML = sorted.map(b => {
+      const color = COLORS[b.person] || '#999';
+      if (b.id === editId) {
+        return `
+          <li class="booking-item">
+            <span class="color-dot" style="background:${color}"></span>
+            <div class="edit-form">
+              <div class="form-group">
+                <label>Person</label>
+                <select id="ep-${b.id}">
+                  ${Object.keys(COLORS).map(n =>
+                    `<option value="${n}"${n===b.person?' selected':''}>${n}</option>`
+                  ).join('')}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Von</label>
+                <input type="date" id="ef-${b.id}" value="${b.from}" />
+              </div>
+              <div class="form-group">
+                <label>Bis</label>
+                <input type="date" id="et-${b.id}" value="${b.to}" />
+              </div>
+              <button class="btn-save"   onclick="saveEdit(${b.id})">Speichern</button>
+              <button class="btn-cancel" onclick="render()">Abbrechen</button>
+            </div>
+          </li>`;
+      }
+      return `
+        <li class="booking-item">
+          <span class="color-dot" style="background:${color}"></span>
+          <div class="booking-info">
+            <span class="booking-name">${b.person}</span>
+            <div class="booking-dates">${formatDate(b.from)} – ${formatDate(b.to)}</div>
+          </div>
+          <div class="booking-actions">
+            <button class="btn-edit"   onclick="startEdit(${b.id})">✏️ Bearbeiten</button>
+            <button class="btn-delete" onclick="deleteBooking(${b.id})">🗑️ Löschen</button>
+          </div>
+        </li>`;
+    }).join('');
+  }
+
+  // Initialisierung
+  render();
+</script>
+</body>
+</html>
