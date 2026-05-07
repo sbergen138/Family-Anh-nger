@@ -6,74 +6,292 @@
   <title>Family Anhänger</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #222; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #222;
+    }
+
     header {
-      background: #1a1a2e; color: white;
-      padding: 18px 24px; font-size: 1.5rem; font-weight: bold;
-      display: flex; align-items: center; gap: 12px;
+      background: #1a1a2e;
+      color: white;
+      padding: 18px 24px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .container { max-width: 900px; margin: 30px auto; padding: 0 16px; }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
     .card {
-      background: white; border-radius: 12px; padding: 24px;
-      margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    h2 { margin-bottom: 16px; font-size: 1.1rem; color: #444; }
-    .form-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
-    .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
-    label { font-size: 0.82rem; color: #666; font-weight: 600; }
-    select, input[type="date"] {
-      padding: 9px 12px; border: 1.5px solid #ddd; border-radius: 8px;
-      font-size: 0.95rem; background: #fafafa; cursor: pointer;
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+      color: #444;
     }
-    select:focus, input[type="date"]:focus { outline: none; border-color: #4a90e2; }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 700;
+    }
+
+    select,
+    input[type="date"] {
+      padding: 12px 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #fafafa;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      min-height: 46px;
+    }
+
+    select:focus,
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #4a90e2;
+      background: #fff;
+    }
+
     button {
-      padding: 10px 20px; border: none; border-radius: 8px;
-      font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
     }
+
     button:hover { opacity: 0.85; }
-    .btn-add    { background: #1a1a2e; color: white; font-weight: bold; min-width: 120px; }
-    .btn-edit   { background: #f0a500; color: white; font-size: 0.8rem; padding: 6px 12px; }
-    .btn-delete { background: #e84040; color: white; font-size: 0.8rem; padding: 6px 12px; }
-    .btn-save   { background: #28a745; color: white; font-size: 0.8rem; padding: 6px 12px; }
-    .btn-cancel { background: #aaa;    color: white; font-size: 0.8rem; padding: 6px 12px; }
-    .calendar-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .calendar-nav button { background: #1a1a2e; color: white; padding: 6px 14px; font-size: 0.9rem; }
-    .month-label { font-size: 1.1rem; font-weight: bold; min-width: 160px; text-align: center; }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    .day-header { text-align: center; font-size: 0.75rem; font-weight: 700; color: #888; padding: 6px 0; }
-    .day-cell { background: #f8f8f8; border-radius: 8px; min-height: 72px; padding: 4px; }
-    .day-cell.today { border: 2px solid #4a90e2; }
-    .day-number { font-size: 0.78rem; color: #aaa; margin-bottom: 2px; }
-    .day-cell.in-month .day-number { color: #333; font-weight: 600; }
+
+    .btn-add {
+      background: #1a1a2e;
+      color: white;
+      font-weight: bold;
+      min-width: 120px;
+      min-height: 46px;
+    }
+
+    .btn-edit {
+      background: #f0a500;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-delete {
+      background: #e84040;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-save {
+      background: #28a745;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .btn-cancel {
+      background: #aaa;
+      color: white;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .calendar-nav button {
+      background: #1a1a2e;
+      color: white;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    .month-label {
+      font-size: 1.1rem;
+      font-weight: bold;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .day-header {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #888;
+      padding: 6px 0;
+    }
+
+    .day-cell {
+      background: #f8f8f8;
+      border-radius: 8px;
+      min-height: 72px;
+      padding: 4px;
+    }
+
+    .day-cell.today {
+      border: 2px solid #4a90e2;
+    }
+
+    .day-number {
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-bottom: 2px;
+    }
+
+    .day-cell.in-month .day-number {
+      color: #333;
+      font-weight: 600;
+    }
+
     .booking-chip {
-      font-size: 0.72rem; padding: 2px 6px; border-radius: 4px;
-      color: white; margin-bottom: 2px; white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis; font-weight: 600;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: white;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
     }
-    .booking-list { list-style: none; }
+
+    .booking-list {
+      list-style: none;
+    }
+
     .booking-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 0; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      flex-wrap: wrap;
     }
-    .booking-item:last-child { border-bottom: none; }
-    .color-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
-    .booking-info { flex: 1; font-size: 0.9rem; }
-    .booking-name { font-weight: 700; }
-    .booking-dates { color: #666; font-size: 0.82rem; }
-    .booking-actions { display: flex; gap: 6px; }
+
+    .booking-item:last-child {
+      border-bottom: none;
+    }
+
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .booking-info {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .booking-name {
+      font-weight: 700;
+    }
+
+    .booking-dates {
+      color: #666;
+      font-size: 0.82rem;
+    }
+
+    .booking-actions {
+      display: flex;
+      gap: 6px;
+    }
+
     .edit-form {
-      display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end;
-      margin-top: 8px; padding: 10px; background: #f7f9ff;
-      border-radius: 8px; width: 100%;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      margin-top: 8px;
+      padding: 10px;
+      background: #f7f9ff;
+      border-radius: 8px;
+      width: 100%;
     }
-    .edit-form .form-group { min-width: 120px; }
-    .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; }
-    .empty-note { color: #aaa; font-style: italic; font-size: 0.9rem; padding: 8px 0; }
+
+    .edit-form .form-group {
+      min-width: 120px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .empty-note {
+      color: #aaa;
+      font-style: italic;
+      font-size: 0.9rem;
+      padding: 8px 0;
+    }
+
     .status-bar {
-      text-align: center; padding: 8px; font-size: 0.82rem;
-      color: #888; background: #fffbe6; border-radius: 8px; margin-bottom: 12px;
+      text-align: center;
+      padding: 8px;
+      font-size: 0.82rem;
+      color: #888;
+      background: #fffbe6;
+      border-radius: 8px;
+      margin-bottom: 12px;
     }
+
     @media (max-width: 600px) {
       .form-row { flex-direction: column; }
       .day-cell { min-height: 54px; }
@@ -102,17 +320,21 @@
           <option value="Stefan">Stefan</option>
         </select>
       </div>
+
       <div class="form-group">
         <label for="sel-from">Von</label>
         <input type="date" id="sel-from" />
       </div>
+
       <div class="form-group">
         <label for="sel-to">Bis</label>
         <input type="date" id="sel-to" />
       </div>
+
       <button class="btn-add" onclick="addBooking()">Eintragen</button>
     </div>
-    <p id="form-error" style="color:#e84040;font-size:0.85rem;margin-top:8px;"></p>
+
+    <p id="form-error" style="color:#e84040;font-size:0.9rem;margin-top:10px;font-weight:600;"></p>
   </div>
 
   <div class="card">
@@ -133,148 +355,221 @@
 
 </div>
 
-<!-- Firebase SDKs -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import {
-    getFirestore, collection, addDoc, deleteDoc, updateDoc,
-    doc, onSnapshot, query, orderBy
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, deleteDoc, updateDoc,
+      doc, onSnapshot, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  // ════════════════════════════════════════════════════
-  // 🔧 HIER DEINE FIREBASE-KONFIGURATION EINFÜGEN:
-  const firebaseConfig = {
-    apiKey: "AIzaSyDABFzzKxluIVcETofZ3q6MvV7OZCNKbQ4",
-    authDomain: "family-anhaenger.firebaseapp.com",
-    projectId: "family-anhaenger",
-    storageBucket: "family-anhaenger.appspot.com",
-    messagingSenderId: "1008420982477",
-    appId: "1:1008420982477:web:3e096ec5d733d10bf9a384"
-  };
-  // ════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════
+    // 🔧 HIER DEINE FIREBASE-KONFIGURATION EINFÜGEN:
+    const firebaseConfig = {
+      apiKey: "AIzaSyDABFzzKxluIVcETofZ3q6MvV7OZCNKbQ4",
+      authDomain: "family-anhaenger.firebaseapp.com",
+      projectId: "family-anhaenger",
+      storageBucket: "family-anhaenger.appspot.com",
+      messagingSenderId: "1008420982477",
+      appId: "1:1008420982477:web:3e096ec5d733d10bf9a384"
+    };
 
   const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
-  const col = collection(db, 'bookings');
+  const db = getFirestore(app);
+  const col = collection(db, "bookings");
 
   const COLORS = {
-    Andreas:  '#e74c3c',
-    Waldemar: '#e67e22',
-    Viktor:   '#2ecc71',
-    Matthias: '#3498db',
-    Johann:   '#9b59b6',
-    Stefan:   '#1abc9c'
+    Andreas: "#e74c3c",
+    Waldemar: "#e67e22",
+    Viktor: "#2ecc71",
+    Matthias: "#3498db",
+    Johann: "#9b59b6",
+    Stefan: "#1abc9c"
   };
 
-  const MONTHS = ['Januar','Februar','März','April','Mai','Juni',
-                  'Juli','August','September','Oktober','November','Dezember'];
-  const DAYS   = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const DAYS = ['Mo','Di','Mi','Do','Fr','Sa','So'];
 
-  let bookings     = [];
-  let currentYear  = new Date().getFullYear();
+  let bookings = [];
+  let currentYear = new Date().getFullYear();
   let currentMonth = new Date().getMonth();
-  let editingId    = null;
+  let editingId = null;
 
-  // ── Echtzeit-Listener ──────────────────────────────
-  const q = query(col, orderBy('from'));
-  onSnapshot(q, (snapshot) => {
-    bookings = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-    document.getElementById('status-bar').textContent = '✅ Verbunden – Änderungen werden live synchronisiert';
-    render();
-  }, () => {
-    document.getElementById('status-bar').textContent = '❌ Verbindungsfehler – bitte Seite neu laden';
+  const fromInput = document.getElementById("sel-from");
+  const toInput = document.getElementById("sel-to");
+
+  fromInput.addEventListener("change", () => {
+    if (fromInput.value) {
+      toInput.focus();
+      if (!toInput.value || toInput.value < fromInput.value) {
+        toInput.value = fromInput.value;
+      }
+    }
   });
 
-  // ── Buchung hinzufügen ─────────────────────────────
+  function hasOverlap(from, to, ignoreId = null) {
+    return bookings.some(b => {
+      if (ignoreId && b.id === ignoreId) return false;
+      return from <= b.to && to >= b.from;
+    });
+  }
+
+  const q = query(col, orderBy("from"));
+  onSnapshot(q, (snapshot) => {
+    bookings = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById("status-bar").textContent = "✅ Verbunden – Änderungen werden live synchronisiert";
+    render();
+  }, (error) => {
+    console.error(error);
+    document.getElementById("status-bar").textContent = "❌ Fehler bei der Verbindung zur Datenbank";
+  });
+
   window.addBooking = async () => {
-    const person = document.getElementById('sel-person').value;
-    const from   = document.getElementById('sel-from').value;
-    const to     = document.getElementById('sel-to').value;
-    const err    = document.getElementById('form-error');
-    if (!person || !from || !to) { err.textContent = 'Bitte alle Felder ausfüllen.'; return; }
-    if (from > to)               { err.textContent = '"Von" darf nicht nach "Bis" liegen.'; return; }
-    err.textContent = '';
+    const person = document.getElementById("sel-person").value;
+    const from = document.getElementById("sel-from").value;
+    const to = document.getElementById("sel-to").value;
+    const err = document.getElementById("form-error");
+
+    if (!person || !from || !to) {
+      err.textContent = "Bitte alle Felder ausfüllen.";
+      return;
+    }
+
+    if (from > to) {
+      err.textContent = '"Von" darf nicht nach "Bis" liegen.';
+      return;
+    }
+
+    if (hasOverlap(from, to)) {
+      err.textContent = "Dieser Zeitraum ist schon gebucht. Doppelbuchungen sind nicht erlaubt.";
+      return;
+    }
+
+    err.textContent = "";
     await addDoc(col, { person, from, to });
-    document.getElementById('sel-person').value = '';
-    document.getElementById('sel-from').value   = '';
-    document.getElementById('sel-to').value     = '';
+
+    document.getElementById("sel-person").value = "";
+    document.getElementById("sel-from").value = "";
+    document.getElementById("sel-to").value = "";
   };
 
-  // ── Buchung löschen ────────────────────────────────
   window.deleteBooking = async (id) => {
-    if (!confirm('Eintrag wirklich löschen?')) return;
-    await deleteDoc(doc(db, 'bookings', id));
+    if (!confirm("Eintrag wirklich löschen?")) return;
+    await deleteDoc(doc(db, "bookings", id));
   };
 
-  // ── Edit starten / abbrechen ───────────────────────
-  window.startEdit  = (id) => { editingId = id; renderList(); };
-  window.cancelEdit = ()   => { editingId = null; renderList(); };
+  window.startEdit = (id) => {
+    editingId = id;
+    renderList();
+  };
 
-  // ── Buchung speichern ──────────────────────────────
+  window.cancelEdit = () => {
+    editingId = null;
+    renderList();
+  };
+
   window.saveEdit = async (id) => {
     const person = document.getElementById(`ep-${id}`).value;
-    const from   = document.getElementById(`ef-${id}`).value;
-    const to     = document.getElementById(`et-${id}`).value;
-    if (!person || !from || !to) { alert('Bitte alle Felder ausfüllen.'); return; }
-    if (from > to) { alert('"Von" darf nicht nach "Bis" liegen.'); return; }
-    await updateDoc(doc(db, 'bookings', id), { person, from, to });
+    const from = document.getElementById(`ef-${id}`).value;
+    const to = document.getElementById(`et-${id}`).value;
+
+    if (!person || !from || !to) {
+      alert("Bitte alle Felder ausfüllen.");
+      return;
+    }
+
+    if (from > to) {
+      alert('"Von" darf nicht nach "Bis" liegen.');
+      return;
+    }
+
+    if (hasOverlap(from, to, id)) {
+      alert("Dieser Zeitraum ist schon gebucht. Doppelbuchungen sind nicht erlaubt.");
+      return;
+    }
+
+    await updateDoc(doc(db, "bookings", id), { person, from, to });
     editingId = null;
   };
 
-  // ── Navigation ─────────────────────────────────────
-  window.prevMonth = () => { currentMonth--; if (currentMonth < 0)  { currentMonth = 11; currentYear--; } renderCalendar(); };
-  window.nextMonth = () => { currentMonth++; if (currentMonth > 11) { currentMonth = 0;  currentYear++; } renderCalendar(); };
+  window.prevMonth = () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+    renderCalendar();
+  };
 
-  // ── Render ─────────────────────────────────────────
-  function render() { renderLegend(); renderCalendar(); renderList(); }
+  window.nextMonth = () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    renderCalendar();
+  };
+
+  function render() {
+    renderLegend();
+    renderCalendar();
+    renderList();
+  }
 
   function renderLegend() {
-    document.getElementById('legend').innerHTML =
+    document.getElementById("legend").innerHTML =
       Object.entries(COLORS).map(([name, color]) =>
         `<span class="legend-item">
-           <span class="color-dot" style="background:${color}"></span>${name}
-         </span>`
-      ).join('');
+          <span class="color-dot" style="background:${color}"></span>${name}
+        </span>`
+      ).join("");
   }
 
   function renderCalendar() {
-    document.getElementById('month-label').textContent = `${MONTHS[currentMonth]} ${currentYear}`;
-    const grid = document.getElementById('calendar');
-    grid.innerHTML = DAYS.map(d => `<div class="day-header">${d}</div>`).join('');
+    document.getElementById("month-label").textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+    const grid = document.getElementById("calendar");
+    grid.innerHTML = DAYS.map(d => `<div class="day-header">${d}</div>`).join("");
 
-    const firstDay    = new Date(currentYear, currentMonth, 1);
+    const firstDay = new Date(currentYear, currentMonth, 1);
     const startOffset = (firstDay.getDay() + 6) % 7;
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const today       = new Date().toISOString().slice(0, 10);
+    const today = new Date().toISOString().slice(0, 10);
 
-    for (let i = 0; i < startOffset; i++) grid.innerHTML += `<div class="day-cell"></div>`;
+    for (let i = 0; i < startOffset; i++) {
+      grid.innerHTML += `<div class="day-cell"></div>`;
+    }
 
     for (let d = 1; d <= daysInMonth; d++) {
-      const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      const chips   = bookings
+      const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const chips = bookings
         .filter(b => b.from <= dateStr && dateStr <= b.to)
         .map(b => `<div class="booking-chip" style="background:${COLORS[b.person]}">${b.person}</div>`)
-        .join('');
-      grid.innerHTML +=
-        `<div class="day-cell in-month${dateStr === today ? ' today' : ''}">
-           <div class="day-number">${d}</div>${chips}
-         </div>`;
+        .join("");
+
+      grid.innerHTML += `
+        <div class="day-cell in-month${dateStr === today ? ' today' : ''}">
+          <div class="day-number">${d}</div>
+          ${chips}
+        </div>
+      `;
     }
   }
 
   function formatDate(d) {
-    const [y, m, day] = d.split('-');
+    const [y, m, day] = d.split("-");
     return `${day}.${m}.${y}`;
   }
 
   function renderList() {
-    const ul = document.getElementById('booking-list');
+    const ul = document.getElementById("booking-list");
+
     if (bookings.length === 0) {
       ul.innerHTML = '<p class="empty-note">Noch keine Buchungen vorhanden.</p>';
       return;
     }
+
     ul.innerHTML = bookings.map(b => {
-      const color = COLORS[b.person] || '#999';
+      const color = COLORS[b.person] || "#999";
+
       if (b.id === editingId) {
         return `
           <li class="booking-item">
@@ -284,8 +579,8 @@
                 <label>Person</label>
                 <select id="ep-${b.id}">
                   ${Object.keys(COLORS).map(n =>
-                    `<option value="${n}"${n===b.person?' selected':''}>${n}</option>`
-                  ).join('')}
+                    `<option value="${n}"${n === b.person ? ' selected' : ''}>${n}</option>`
+                  ).join("")}
                 </select>
               </div>
               <div class="form-group">
@@ -296,11 +591,13 @@
                 <label>Bis</label>
                 <input type="date" id="et-${b.id}" value="${b.to}" />
               </div>
-              <button class="btn-save"   onclick="saveEdit('${b.id}')">Speichern</button>
+              <button class="btn-save" onclick="saveEdit('${b.id}')">Speichern</button>
               <button class="btn-cancel" onclick="cancelEdit()">Abbrechen</button>
             </div>
-          </li>`;
+          </li>
+        `;
       }
+
       return `
         <li class="booking-item">
           <span class="color-dot" style="background:${color}"></span>
@@ -309,14 +606,14 @@
             <div class="booking-dates">${formatDate(b.from)} – ${formatDate(b.to)}</div>
           </div>
           <div class="booking-actions">
-            <button class="btn-edit"   onclick="startEdit('${b.id}')">✏️ Bearbeiten</button>
+            <button class="btn-edit" onclick="startEdit('${b.id}')">✏️ Bearbeiten</button>
             <button class="btn-delete" onclick="deleteBooking('${b.id}')">🗑️ Löschen</button>
           </div>
-        </li>`;
-    }).join('');
+        </li>
+      `;
+    }).join("");
   }
 
-  // Initialer Render (Kalender + Legende ohne Daten)
   renderLegend();
   renderCalendar();
 </script>
